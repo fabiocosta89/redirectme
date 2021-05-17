@@ -1,8 +1,14 @@
-import './App.css';
+import './App.scss';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import { Fragment } from 'react';
 
 function App() {
   return (
-    <div></div>
+    <Fragment>
+      <Header />
+      <Footer />
+    </Fragment>
   );
 }
 
