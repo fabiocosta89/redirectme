@@ -24,7 +24,14 @@ const Footer = () => {
         <Container maxWidth="md">
           <Toolbar>
             <Typography variant="body1" color="inherit">
-              <Link href="https://fabiocosta.eu" target="_blank" color="inherit">© 2021 Fabio Costa</Link>
+              <Link 
+                href="https://fabiocosta.eu"
+                target="_blank" 
+                color="inherit"
+                rel="noopener"
+                underline="none"
+                >© 2021 Fabio Costa
+              </Link>
             </Typography>
           </Toolbar>
         </Container>

@@ -26,7 +26,7 @@ const Header = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Link href="#" color="inherit">
+            <Link href="#" color="inherit" underline="none">
               Redirect-Me
             </Link>
           </Typography>
