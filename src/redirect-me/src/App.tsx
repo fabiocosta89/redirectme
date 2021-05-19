@@ -1,14 +1,23 @@
 import './App.scss';
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
-import { Fragment } from 'react';
+import { 
+  BrowserRouter as Router, 
+  Switch,
+  Route
+} from 'react-router-dom';
 
 function App() {
   return (
-    <Fragment>
+    <Router>
       <Header />
+      <Switch>
+        <Route exact path="/">
+          
+        </Route>
+      </Switch>
       <Footer />
-    </Fragment>
+    </Router>
   );
 }
 
