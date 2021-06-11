@@ -15,19 +15,19 @@ namespace RedirectMe_Functions.Funtions
     using System.IO;
     using System.Threading.Tasks;
 
-    public class CreateRedirect
+    public class GetRedirect
     {
-        private readonly ILogger<CreateRedirect> _logger;
+        private readonly ILogger<GetRedirect> _logger;
         private readonly IRedirectService _redirectService;
 
-        public CreateRedirect(ILogger<CreateRedirect> logger,
+        public GetRedirect(ILogger<GetRedirect> logger,
             IRedirectService redirectService)
         {
             _logger = logger;
             _redirectService = redirectService;
         }
 
-        [FunctionName(nameof(CreateRedirect))]
+        [FunctionName(nameof(GetRedirect))]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
@@ -39,9 +39,9 @@ namespace RedirectMe_Functions.Funtions
 
                 var redirectRequest = JsonConvert.DeserializeObject<RedirectDto>(incomingRequest);
 
-                RedirectDto redirectDto = await _redirectService.CreateRedirect(redirectRequest);
+                RedirectDto redirectDto = await _redirectService.GetRedirect(redirectRequest);
 
-                result = new OkObjectResult(redirectDto.Id);
+                result = new OkObjectResult(redirectDto.Url);
             }
             catch (Exception ex)
             {

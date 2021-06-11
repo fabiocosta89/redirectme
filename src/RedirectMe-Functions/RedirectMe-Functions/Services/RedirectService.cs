@@ -1,7 +1,6 @@
 ﻿namespace RedirectMe_Functions.Services
 {
     using Microsoft.Azure.Cosmos;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
 
     using RedirectMe_Functions.Constants;
@@ -30,27 +29,39 @@
             _redirects = _database.GetContainer(DbConstants.RedirectContainer);
         }
 
-        public Task<RedirectDto> GetRedirect(RedirectDto redirectDto)
+        public async Task<RedirectDto> GetRedirect(RedirectDto redirectDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var redirect = await _redirects.ReadItemAsync<Redirect>(redirectDto.Id, new PartitionKey(redirectDto.Id));
+                redirectDto.Url = redirect.Resource.Url;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't get the item. Exception thrown: ${ex.Message}");
+                throw new ApplicationException(ex.Message);
+            }
+
+            return redirectDto;
         }
 
         public async Task<RedirectDto> CreateRedirect(RedirectDto redirectDto)
         {
+            string url = UrlHelper.ValidateUrl(redirectDto.Url);
+
             var idHelper = new IdHelper();
 
             var redirect = new Redirect
             {
-                Id = Guid.NewGuid(),
-                ShortCode = idHelper.GenerateNewId(4),
-                Url = redirectDto.Url,
+                Id = idHelper.GenerateNewId(4),
+                Url = url,
                 CreationDate = DateTime.UtcNow,
                 NumberOfTimesUsed = 0
             };
 
             try
             {
-                await _redirects.CreateItemAsync(redirect, new PartitionKey(redirect.ShortCode));
+                await _redirects.CreateItemAsync(redirect, new PartitionKey(redirect.Id));
             } 
             catch (Exception ex)
             {
@@ -58,7 +69,7 @@
                 throw new ApplicationException(ex.Message);
             }
 
-            redirectDto.ShortCode = redirect.ShortCode;
+            redirectDto.Id = redirect.Id;
 
             return redirectDto;
         }
