@@ -1,11 +1,14 @@
-import './App.scss';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
 import { 
   BrowserRouter as Router, 
   Switch,
   Route
 } from 'react-router-dom';
+
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import AddUrl from './views/AddUrl';
+
+import './App.scss';
 
 function App() {
   return (
@@ -13,7 +16,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/">
-          
+          <AddUrl />
         </Route>
       </Switch>
       <Footer />
