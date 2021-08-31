@@ -30,7 +30,7 @@ const Footer = () => {
                 color="inherit"
                 rel="noopener"
                 underline="none"
-                >© 2021 Fabio Costa
+                >© {new Date().getFullYear()} Fabio Costa
               </Link>
             </Typography>
           </Toolbar>
