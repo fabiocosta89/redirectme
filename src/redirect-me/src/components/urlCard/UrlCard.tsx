@@ -2,17 +2,19 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField/';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import { useState } from 'react';
+import useAddUrlApi from '../../api/useAddUrlApi';
 
 const UrlCard = () => {
-
   const [url, setUrl] = useState<string>("");
+  const [res, addUrlApi] = useAddUrlApi(url);
 
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
+    addUrlApi();
   }
 
   const onChangeUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,6 +62,7 @@ const UrlCard = () => {
               size="large"
               type="submit"
               value="Submit"
+              onSubmit={handleSubmit}
             >
               Shorten
             </Button>

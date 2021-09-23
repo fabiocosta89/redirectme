@@ -47,6 +47,8 @@
 
         public async Task<RedirectDto> CreateRedirect(RedirectDto redirectDto)
         {
+            if (string.IsNullOrWhiteSpace(redirectDto.Url)) return null;
+
             string url = UrlHelper.ValidateUrl(redirectDto.Url);
 
             var idHelper = new IdHelper();
