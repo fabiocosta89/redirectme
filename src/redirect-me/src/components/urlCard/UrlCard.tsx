@@ -4,17 +4,29 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField/';
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
 import React from 'react';
 import { useState } from 'react';
+
 import useAddUrlApi from '../../api/useAddUrlApi';
 
 const UrlCard = () => {
   const [url, setUrl] = useState<string>("");
   const [res, addUrlApi] = useAddUrlApi(url);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
+  var expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
+  var regex = new RegExp(expression);
 
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    addUrlApi();
+
+    if (url.match(regex)) {
+      setShowAlert(false);
+      addUrlApi();
+    } else {
+      setShowAlert(true);
+    }
   }
 
   const onChangeUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,12 +39,12 @@ const UrlCard = () => {
         <CardContent>
           <Grid item xs={12}>
             <Typography variant="h3" component="h1">
-              Shorten your link
+              Small is easier
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body1" component="p">
-              Insert your big link to get a shorter version.
+              Insert your big URL and get shorter redirect to it.
             </Typography>
           </Grid>
           <br />
@@ -48,6 +60,9 @@ const UrlCard = () => {
               onChange={onChangeUrl}
             />
           </Grid>
+          { showAlert && 
+            <Alert severity="error">The URL is not valid!</Alert>
+          }
           <br />
           <Grid item
             xs={12}
