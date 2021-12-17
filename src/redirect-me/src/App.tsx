@@ -6,7 +6,7 @@ import {
 
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
-import AddUrl from './views/AddUrl';
+import AddUrl from './pages/addUrl/AddUrl';
 
 import './App.scss';
 
@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Header />
       <Switch>
-        <Route exact path="/">
+        <Route path="/">
           <AddUrl />
         </Route>
       </Switch>
