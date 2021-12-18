@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField/';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
-import Modal from '@material-ui/core/Modal';
 import React from 'react';
 import { useState } from 'react';
 
@@ -14,7 +13,7 @@ import ModalRedirect from '../modalRedirect/ModalRedirect';
 
 const UrlCard = () => {
   const [url, setUrl] = useState<string>("");
-  const [res, addUrlApi] = useAddUrlApi(url);
+  const [result, addUrlApi] = useAddUrlApi(url);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
@@ -26,8 +25,8 @@ const UrlCard = () => {
 
     if (url.match(regex)) {
       setShowAlert(false);
-      //addUrlApi();
-      handleOpen();
+      addUrlApi();
+      modalOpen();
     } else {
       setShowAlert(true);
     }
@@ -38,12 +37,12 @@ const UrlCard = () => {
   }
 
   // handle for opening the modal
-  const handleOpen = () => {
+  const modalOpen = () => {
     setOpen(true);
   };
 
   // handle for closing the modal
-  const handleClose = () => {
+  const modalClose = () => {
     setOpen(false);
   };
 
@@ -100,7 +99,7 @@ const UrlCard = () => {
           </CardContent>
         </Card>
       </form>
-      <ModalRedirect open={open} url="fabiocosta.eu" />
+      <ModalRedirect open={open} url={result.data} modalClose={modalClose} />
     </>
   );
 }
