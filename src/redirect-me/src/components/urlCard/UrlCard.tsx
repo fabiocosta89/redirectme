@@ -5,27 +5,43 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField/';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import { useState } from 'react';
 
 import useAddUrlApi from '../../api/useAddUrlApi';
 import ModalRedirect from '../modalRedirect/ModalRedirect';
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
+  }),
+);
+
 const UrlCard = () => {
   const [url, setUrl] = useState<string>("");
   const [result, addUrlApi] = useAddUrlApi(url);
   const [showAlert, setShowAlert] = useState<boolean>(false);
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const classes = useStyles();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   var expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
   var regex = new RegExp(expression);
 
-  const handleSubmit = (e: React.SyntheticEvent): void => {
+  const handleSubmit = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();
 
     if (url.match(regex)) {
+      showLoading(true);
       setShowAlert(false);
-      addUrlApi();
+      await addUrlApi();
+      showLoading(false);
       modalOpen();
     } else {
       setShowAlert(true);
@@ -38,12 +54,18 @@ const UrlCard = () => {
 
   // handle for opening the modal
   const modalOpen = () => {
-    setOpen(true);
+    setOpenModal(true);
   };
 
   // handle for closing the modal
   const modalClose = () => {
-    setOpen(false);
+    setUrl("");
+    setOpenModal(false);
+  };
+
+  // Handle loading
+  const showLoading = (loading: boolean) => {
+    setIsLoading(loading);
   };
 
   return (
@@ -99,7 +121,10 @@ const UrlCard = () => {
           </CardContent>
         </Card>
       </form>
-      <ModalRedirect open={open} url={result.data} modalClose={modalClose} />
+      <ModalRedirect open={openModal} code={result.data} modalClose={modalClose} />
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }

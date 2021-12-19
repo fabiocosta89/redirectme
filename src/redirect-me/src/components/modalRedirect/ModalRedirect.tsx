@@ -34,13 +34,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface ModalRedirectModel {
     open: boolean;
-    url: string;
+    code: string;
     modalClose(): any;
 }
 
-const ModalRedirect = ({open, url, modalClose} : ModalRedirectModel) => {
+const ModalRedirect = ({open, code, modalClose} : ModalRedirectModel) => {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
+    const newUrl = `${process.env.REACT_APP_FRONT_URL}/${code}`;
 
     // handle for closing the modal
     const handleClose = () => {
@@ -69,11 +70,11 @@ const ModalRedirect = ({open, url, modalClose} : ModalRedirectModel) => {
                 <Grid item xs={12}>
                     <ChevronRightIcon />
                     <Link 
-                        href={url}
+                        href={newUrl}
                         target="_blank"
                         rel="noopener"
                     >
-                        {url}
+                        {newUrl}
                     </Link>
                     <ChevronLeftIcon />
                 </Grid>

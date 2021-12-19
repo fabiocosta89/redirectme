@@ -3,22 +3,21 @@ import { useCallback, useState } from "react";
 
 import ReturnModel from "./returnModel";
 
-const baseURL = "http://localhost:7071/api/CreateRedirect";
-
 const useAddUrlApi = (url: string) => {
-    const [res, setRes] = useState<ReturnModel>({data: '', error: null, isLoading: false});
+   const actionURL = `${process.env.REACT_APP_API_URL}/CreateRedirect`;
+   const [res, setRes] = useState<ReturnModel>({data: '', error: null, isLoading: false});
 
-    // POST method
-    const callAPI = useCallback(() => {
-         setRes(prevState => ({...prevState, isLoading: true}));
-         axios.post(baseURL, { Url: url }).then(res => {
-            setRes({data: res.data, isLoading: false, error: null});
-         }).catch((error) => {
-            setRes({data: '', isLoading: false, error});
-         });
-   }, [url]);
+   const callAPI = useCallback(async () => {
+      setRes(prevState => ({...prevState, isLoading: true}));
+
+      try{
+         const res = await axios.post(actionURL, { Url: url });
+         setRes({data: res.data, isLoading: false, error: null});
+      } catch (error: any) {
+         setRes({data: '', isLoading: false, error});
+      }
+   }, [url, actionURL]);
    
-   debugger;
    return [res, callAPI] as const;
 }
 
