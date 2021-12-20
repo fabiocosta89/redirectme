@@ -46,7 +46,7 @@ namespace RedirectMe_Functions.Funtions
             catch (Exception ex)
             {
                 _logger.LogError($"Internal Server Error. Exception: {ex.Message}");
-                result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                result = new StatusCodeResult(StatusCodes.Status404NotFound);
             }
 
             return result;
