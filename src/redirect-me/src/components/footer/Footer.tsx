@@ -32,6 +32,15 @@ const Footer = () => {
                 underline="none"
                 >© {new Date().getFullYear()} Fabio Costa
               </Link>
+              <span> | </span>
+              <Link 
+                href="https://github.com/fabiocosta89/redirectme"
+                target="_blank" 
+                color="inherit"
+                rel="noopener"
+                underline="none"
+                >Source Code
+              </Link>
             </Typography>
           </Toolbar>
         </Container>
