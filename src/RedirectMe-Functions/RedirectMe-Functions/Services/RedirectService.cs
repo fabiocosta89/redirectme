@@ -31,16 +31,8 @@
 
         public async Task<RedirectDto> GetRedirect(RedirectDto redirectDto)
         {
-            try
-            {
-                var redirect = await _redirects.ReadItemAsync<Redirect>(redirectDto.Id, new PartitionKey(redirectDto.Id));
-                redirectDto.Url = redirect.Resource.Url;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Couldn't get the item. Exception thrown: ${ex.Message}");
-                throw new ApplicationException(ex.Message);
-            }
+            var redirect = await _redirects.ReadItemAsync<Redirect>(redirectDto.Id, new PartitionKey(redirectDto.Id));
+            redirectDto.Url = redirect.Resource.Url;
 
             return redirectDto;
         }
@@ -51,11 +43,9 @@
 
             string url = UrlHelper.ValidateUrl(redirectDto.Url);
 
-            var idHelper = new IdHelper();
-
             var redirect = new Redirect
             {
-                Id = idHelper.GenerateNewId(4),
+                Id = new IdHelper().GenerateNewId(RedirectConstants.UrlCodeLenght),
                 Url = url,
                 CreationDate = DateTime.UtcNow,
                 NumberOfTimesUsed = 0
