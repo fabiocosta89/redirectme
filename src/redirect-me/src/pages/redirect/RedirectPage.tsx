@@ -30,6 +30,7 @@ const RedirectPage = () => {
 
         const fetchData = async () => {
             await addUrlApi();
+            console.log(result)
         };
 
         fetchData();

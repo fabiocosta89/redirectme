@@ -20,10 +20,12 @@ function App() {
         <Route exact path="/">
           <AddUrl />
         </Route>
+        <Route path="/test">
+          <h1>Test</h1>
+        </Route>
         <Route path="/:id">
           <RedirectPage />
         </Route>
-        {/* <Redirect to="/" /> */}
       </Switch>
       <Footer />
     </Router>
