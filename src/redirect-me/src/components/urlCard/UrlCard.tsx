@@ -29,7 +29,8 @@ const UrlCard = () => {
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
 
   var expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
   var regex = new RegExp(expression);
@@ -39,17 +40,33 @@ const UrlCard = () => {
 
     if (url.match(regex)) {
       showLoading(true);
-      setShowAlert(false);
       await addUrlApi();
       showLoading(false);
+      if (result.error || result.data === ''){
+        onShowAlert(true);
+        return;
+      }
+      hideAlert();
       modalOpen();
     } else {
-      setShowAlert(true);
+      onShowAlert(false);
     }
   }
 
   const onChangeUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(e.currentTarget.value);
+  }
+
+  const onShowAlert = (isError: boolean) => {
+    if (isError)
+      setAlertMessage("There was an error! Please try again.");
+    else
+      setAlertMessage("The URL is not valid!");
+    setShowAlert(true);
+  }
+
+  const hideAlert = () => {
+    setShowAlert(false);
   }
 
   // handle for opening the modal
@@ -97,7 +114,7 @@ const UrlCard = () => {
               />
             </Grid>
             { showAlert && 
-              <Alert severity="error">The URL is not valid!</Alert>
+              <Alert severity="error">{alertMessage}</Alert>
             }
             <br />
             <Grid item

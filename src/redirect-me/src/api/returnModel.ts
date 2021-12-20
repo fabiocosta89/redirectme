@@ -1,6 +1,6 @@
 interface ReturnModel {
     data: string,
-    error: string | null,
+    error: boolean,
     isLoading: boolean
 }
 
