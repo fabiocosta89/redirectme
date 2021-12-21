@@ -31,8 +31,15 @@
 
         public async Task<RedirectDto> GetRedirect(RedirectDto redirectDto)
         {
-            var redirect = await _redirects.ReadItemAsync<Redirect>(redirectDto.Id, new PartitionKey(redirectDto.Id));
-            redirectDto.Url = redirect.Resource.Url;
+            var partitionKey = new PartitionKey(redirectDto.Id);
+            var itemResponse = await _redirects.ReadItemAsync<Redirect>(redirectDto.Id, partitionKey);
+            var redirect = itemResponse.Resource;
+            redirectDto.Url = redirect.Url;
+
+            // update redirection usage
+            redirect.NumberOfTimesUsed++;
+            redirect.LastUsedDate = DateTime.UtcNow;
+            await _redirects.UpsertItemAsync<Redirect>(redirect, partitionKey);
 
             return redirectDto;
         }
