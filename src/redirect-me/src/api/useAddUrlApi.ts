@@ -8,8 +8,6 @@ const useAddUrlApi = (url: string) => {
    const [res, setRes] = useState<ReturnModel>({data: '', error: false, isLoading: false});
 
    const callAPI = useCallback(async () => {
-      setRes(prevState => ({...prevState, isLoading: true}));
-
       try{
          const result = await axios.post(actionURL, { Url: url });
          setRes({data: result.data, isLoading: false, error: false});

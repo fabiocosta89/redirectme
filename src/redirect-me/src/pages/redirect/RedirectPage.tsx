@@ -31,10 +31,6 @@ const RedirectPage = () => {
 
         const fetchData = async () => {
             await addUrlApi();
-            if (result.data === "")
-            {
-                history.push("/not-found");
-            }
         };
 
         fetchData();
@@ -42,7 +38,8 @@ const RedirectPage = () => {
 
     useEffect(() => {
         if (result.data !== "") window.location.href = result.data;
-    }, [result]);
+        else if (result.error) history.push("/not-found");
+    }, [result, history]);
 
     return (
         <Backdrop className={classes.backdrop} open={isLoading}>

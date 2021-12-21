@@ -8,7 +8,7 @@ import Alert from '@material-ui/lab/Alert';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 
 import useAddUrlApi from '../../api/useAddUrlApi';
@@ -35,19 +35,21 @@ const UrlCard = () => {
   var expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
   var regex = new RegExp(expression);
 
+  useEffect(() => {
+    showLoading(false);
+    if (result.error) onShowAlert(true);
+    else if (result.data !== "") {
+      hideAlert();
+      modalOpen();
+    }
+  }, [result]);
+
   const handleSubmit = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();
 
     if (url.match(regex)) {
       showLoading(true);
       await addUrlApi();
-      showLoading(false);
-      if (result.error || result.data === ''){
-        onShowAlert(true);
-        return;
-      }
-      hideAlert();
-      modalOpen();
     } else {
       onShowAlert(false);
     }
@@ -58,10 +60,8 @@ const UrlCard = () => {
   }
 
   const onShowAlert = (isError: boolean) => {
-    if (isError)
-      setAlertMessage("There was an error! Please try again.");
-    else
-      setAlertMessage("The URL is not valid!");
+    if (isError) setAlertMessage("There was an error! Please try again.");
+    else setAlertMessage("The URL is not valid!");
     setShowAlert(true);
   }
 
