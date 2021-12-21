@@ -3,7 +3,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useGetUrlApi from "../../api/useGetUrlApi";
 
 interface RouteParams {
@@ -24,13 +24,17 @@ const RedirectPage = () => {
     const { id }  = useParams<RouteParams>();
     const [result, addUrlApi] = useGetUrlApi(id);
     const [isLoading, setIsLoading] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         setIsLoading(true);
 
         const fetchData = async () => {
             await addUrlApi();
-            console.log(result)
+            if (result.data === "")
+            {
+                history.push("/not-found");
+            }
         };
 
         fetchData();

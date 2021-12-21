@@ -1,8 +1,7 @@
 import { 
   BrowserRouter as Router, 
   Switch,
-  Route,
-  Redirect
+  Route
 } from 'react-router-dom';
 
 import Header from './components/header/Header';
@@ -11,6 +10,7 @@ import AddUrl from './pages/addUrl/AddUrl';
 import RedirectPage from './pages/redirect/RedirectPage';
 
 import './App.scss';
+import NotFound from './pages/notFound/NotFound';
 
 function App() {
   return (
@@ -20,11 +20,14 @@ function App() {
         <Route exact path="/">
           <AddUrl />
         </Route>
-        <Route path="/test">
-          <h1>Test</h1>
+        <Route path="/not-found">
+          <NotFound />
         </Route>
         <Route path="/:id">
           <RedirectPage />
+        </Route>
+        <Route path="*">
+          <NotFound />
         </Route>
       </Switch>
       <Footer />
