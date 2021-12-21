@@ -36,6 +36,7 @@ jobs:
         env: # Add environment variables here
           REACT_APP_FRONT_URL: ${{ secrets.REACT_APP_FRONT_URL }}
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_GA_CODE: ${{ secrets.REACT_APP_GA_CODE }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
