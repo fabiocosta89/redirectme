@@ -6,6 +6,8 @@ import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import Button from "@material-ui/core/Button";
 
+import logo from './logo.png';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -16,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       flexGrow: 1
+    },
+    logo: {
+      paddingRight: '0.2rem'
     }
   })
 );
@@ -27,6 +32,9 @@ const Header = () => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar id="top">
+          <Link color="inherit" underline="none" component={RouterLink} to="/">
+            <img src={logo} alt="Logo" className={classes.logo} />
+          </Link>
           <Typography variant="h6" className={classes.title}>
             <Link color="inherit" underline="none" component={RouterLink} to="/">
               Redirect-Me
