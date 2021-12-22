@@ -9,6 +9,7 @@ import Footer from './components/footer/Footer';
 import AddUrl from './pages/addUrl/AddUrl';
 import RedirectPage from './pages/redirect/RedirectPage';
 import NotFound from './pages/notFound/NotFound';
+import Policy from './pages/policy/Policy';
 
 import './App.scss';
 
@@ -20,6 +21,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <AddUrl />
+        </Route>
+        <Route path="/policy">
+          <Policy />
         </Route>
         <Route path="/not-found">
           <NotFound />

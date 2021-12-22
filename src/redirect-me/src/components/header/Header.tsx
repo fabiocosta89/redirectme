@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,12 +26,17 @@ const Header = () => {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar id="top">
           <Typography variant="h6" className={classes.title}>
             <Link color="inherit" underline="none" component={RouterLink} to="/">
               Redirect-Me
             </Link>
           </Typography>
+          <Button color="inherit">
+            <Link color="inherit" underline="none" component={RouterLink} to="/policy">
+              Policy
+            </Link>
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
