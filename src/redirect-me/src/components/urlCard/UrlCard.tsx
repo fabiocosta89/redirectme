@@ -8,8 +8,9 @@ import Alert from '@material-ui/lab/Alert';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useState } from 'react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 import useAddUrlApi from '../../api/useAddUrlApi';
 import ModalRedirect from '../modalRedirect/ModalRedirect';
@@ -31,6 +32,18 @@ const UrlCard = () => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
+  // event handler to call the verification on form submit
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log('Execute recaptcha not yet available');
+      return;
+    }
+
+    const token = await executeRecaptcha('NewUrl');
+    if (token.length === 0) onShowAlert(true);
+  }, []);
 
   var expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
   var regex = new RegExp(expression);
@@ -44,8 +57,14 @@ const UrlCard = () => {
     }
   }, [result]);
 
+  // useEffect to trigger the verification as soon as the component being loaded
+  useEffect(() => {
+      handleReCaptchaVerify();
+    }, [handleReCaptchaVerify]);
+
   const handleSubmit = async (e: React.SyntheticEvent): Promise<void> => {
     e.preventDefault();
+    handleReCaptchaVerify();
 
     if (url.match(regex)) {
       showLoading(true);
