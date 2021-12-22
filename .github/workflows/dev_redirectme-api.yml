@@ -6,7 +6,7 @@ name: Build and deploy dotnet core project to Azure Function App - redirectme-ap
 on:
   push:
     branches:
-      - dev
+      - main
   workflow_dispatch:
 
 env:
