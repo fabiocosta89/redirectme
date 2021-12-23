@@ -10,6 +10,7 @@ import AddUrl from './pages/addUrl/AddUrl';
 import RedirectPage from './pages/redirect/RedirectPage';
 import NotFound from './pages/notFound/NotFound';
 import Policy from './pages/policy/Policy';
+import AboutUs from './pages/aboutUs/AboutUs';
 
 import './App.scss';
 
@@ -21,6 +22,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <AddUrl />
+        </Route>
+        <Route path="/about-us">
+          <AboutUs />
         </Route>
         <Route path="/policy">
           <Policy />

@@ -116,7 +116,8 @@ const UrlCard = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="body1" component="p">
-                Insert your big URL and get shorter redirect to it.
+                Insert your big URL and get shorter a redirect to it. This application is <b>free and does not keep</b> any 
+                personal information about it's users.
               </Typography>
             </Grid>
             <br />

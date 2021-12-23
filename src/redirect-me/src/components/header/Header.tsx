@@ -41,6 +41,11 @@ const Header = () => {
             </Link>
           </Typography>
           <Button color="inherit">
+            <Link color="inherit" underline="none" component={RouterLink} to="/about-us">
+              About
+            </Link>
+          </Button>
+          <Button color="inherit">
             <Link color="inherit" underline="none" component={RouterLink} to="/policy">
               Policy
             </Link>
