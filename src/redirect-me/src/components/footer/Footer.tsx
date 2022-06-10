@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import packageJson from '../../../package.json';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +42,7 @@ const Footer = () => {
                 >Source Code
               </Link>
               <span> | </span>
-              <span>v{packageJson.version}</span>
+              <span>v{process.env.REACT_APP_VERSION}</span>
             </Typography>
           </Toolbar>
         </Container>
