@@ -41,6 +41,8 @@ const Footer = () => {
                 underline="none"
                 >Source Code
               </Link>
+              <span> | </span>
+              <span>v{process.env.REACT_APP_VERSION}</span>
             </Typography>
           </Toolbar>
         </Container>
