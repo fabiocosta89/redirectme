@@ -1,6 +1,6 @@
 {
   "name": "redirect-me",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.4",
@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.21.4",
     "node-sass": "^6.0.1",
+    "qrcode.react": "^3.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-google-recaptcha-v3": "^1.9.8",

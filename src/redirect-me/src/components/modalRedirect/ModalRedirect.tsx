@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Grid from '@material-ui/core/Grid';
+import { QRCodeSVG } from 'qrcode.react';
 
 const getModalStyle = () => {
     const top = 50;
@@ -56,27 +57,32 @@ const ModalRedirect = ({open, code, modalClose} : ModalRedirectModel) => {
             aria-describedby="Here is your url redirect"
         >
             <div style={modalStyle} className={classes.paper}>
-                <Grid item xs={12}>
-                    <Typography variant="h3" component="h2">
-                        Your new url
-                    </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="body1" component="p">
-                        Use this new shorter url to share with others and get a redirection.
-                        Keep this url safe, as it <b>cannot be recovered</b>!
-                    </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <ChevronRightIcon />
-                    <Link 
-                        href={newUrl}
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        {newUrl}
-                    </Link>
-                    <ChevronLeftIcon />
+                <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                        <Typography variant="h3" component="h2">
+                            Your new url
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography variant="body1" component="p">
+                            Use this new shorter url to share with others and get a redirection.
+                            Keep this url safe, as it <b>cannot be recovered</b>!
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ChevronRightIcon />
+                        <Link 
+                            href={newUrl}
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            {newUrl}
+                        </Link>
+                        <ChevronLeftIcon />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <QRCodeSVG value={newUrl} />
+                    </Grid>
                 </Grid>
             </div>
         </Modal>
