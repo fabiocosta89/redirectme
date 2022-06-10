@@ -142,7 +142,7 @@ const UrlCard = () => {
               container
               alignItems="center"
               direction="row"
-              justify="center"
+              justifyContent="center"
             >
               <Button 
                 variant="contained"
