@@ -5,8 +5,11 @@ name: Backend - Build / deploy dotnet core app to Azure Function App
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths: [redirectme/src/RedirectMe-Functions/*]
+  pull_request:
+    branches: [main]
+    paths: [redirectme/src/RedirectMe-Functions/*]
   workflow_dispatch:
 
 env:
