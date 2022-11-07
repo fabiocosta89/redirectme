@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy dotnet core project to Azure Function App - redirectme-api
+name: Backend - Build / deploy dotnet core app to Azure Function App
 
 on:
   push:
@@ -18,7 +18,7 @@ env:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v2
@@ -29,7 +29,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: 'Resolve Project Dependencies Using Dotnet'
-        shell: bash
+        shell: pwsh
         run: |
           pushd './${{ secrets.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
@@ -39,7 +39,7 @@ jobs:
         uses: Azure/functions-action@v1
         id: fa
         with:
-          app-name: 'redirectme-api'
+          app-name: 'redirect-me-func'
           slot-name: 'Production'
           package: '${{ secrets.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8FC85F932AC14277B6349965D4B75B7F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2C53FF4ADE1E4CDEB2B6BA0DDE013E3A }}
