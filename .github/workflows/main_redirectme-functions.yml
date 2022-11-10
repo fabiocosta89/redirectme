@@ -5,8 +5,11 @@ name: Build and deploy dotnet core project to Azure Function App - redirectme-fu
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths: [redirectme/src/RedirectMe-Functions/*]
+  pull_request:
+    branches: [main]
+    paths: [redirectme/src/RedirectMe-Functions/*]
   workflow_dispatch:
 
 env:
