@@ -8,6 +8,8 @@
     using RedirectMe_Functions.Helpers;
     using RedirectMe_Functions.Models;
 
+    using Sentry;
+
     using System;
     using System.Threading.Tasks;
 
@@ -65,6 +67,7 @@
             catch (Exception ex)
             {
                 _logger.LogError($"Couldn't insert item. Exception thrown: ${ex.Message}");
+                SentrySdk.CaptureException(ex);
                 throw new ApplicationException(ex.Message);
             }
 

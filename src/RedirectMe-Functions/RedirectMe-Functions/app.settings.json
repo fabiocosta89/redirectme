@@ -1,0 +1,6 @@
+{
+  "ConnectionString": "ConnectionString",
+  "Sentry": {
+    "Dsn": "sentry_dsn"
+  }
+}

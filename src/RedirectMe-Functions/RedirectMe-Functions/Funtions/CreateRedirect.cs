@@ -11,6 +11,8 @@ namespace RedirectMe_Functions.Funtions
     using RedirectMe_Functions.Dtos;
     using RedirectMe_Functions.Services;
 
+    using Sentry;
+
     using System;
     using System.IO;
     using System.Threading.Tasks;
@@ -21,7 +23,8 @@ namespace RedirectMe_Functions.Funtions
         private readonly IRedirectService _redirectService;
 
         public CreateRedirect(ILogger<CreateRedirect> logger,
-            IRedirectService redirectService)
+            IRedirectService redirectService,
+            ISentryClient sentryClient)
         {
             _logger = logger;
             _redirectService = redirectService;
@@ -46,6 +49,7 @@ namespace RedirectMe_Functions.Funtions
             catch (Exception ex)
             {
                 _logger.LogError($"Internal Server Error. Exception: {ex.Message}");
+                SentrySdk.CaptureException(ex);
                 result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
