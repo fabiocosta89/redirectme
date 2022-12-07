@@ -2,7 +2,7 @@
 
 <PageTitle>RedirectMe-BackOffice</PageTitle>
 
-<div class="page">
+@*<div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
@@ -16,4 +16,28 @@
             @Body
         </article>
     </main>
-</div>
+</div>*@
+
+<RadzenLayout class="rz-shadow-3" style="">
+    <RadzenHeader>
+        <div class="d-flex align-items-center">
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+            <RadzenLink Text="RedirectMe BackOffice" Target="/" />
+        </div>
+    </RadzenHeader>
+    <RadzenSidebar @bind-Expanded="@sidebarExpanded">
+        <NavMenu />
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="p-2">
+            @Body
+        </div>
+    </RadzenBody>
+    <RadzenFooter>
+        Footer
+    </RadzenFooter>
+</RadzenLayout>
+
+@code{
+    bool sidebarExpanded = true;
+}
