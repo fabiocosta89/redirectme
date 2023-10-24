@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
     <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}
+      reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY!}
       scriptProps={{ async: true, defer: true, appendTo: 'body' }}
     >
       <App />
