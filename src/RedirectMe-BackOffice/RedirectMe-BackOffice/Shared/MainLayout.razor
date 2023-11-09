@@ -2,28 +2,10 @@
 
 <PageTitle>RedirectMe-BackOffice</PageTitle>
 
-@*<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>*@
-
-<RadzenLayout class="rz-shadow-3" style="">
+<RadzenLayout class="rz-shadow-3">
     <RadzenHeader>
-        <div class="d-flex align-items-center">
-            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
-            <RadzenLink Text="RedirectMe BackOffice" Target="/" />
-        </div>
+        <Header SidebarExpanded=sidebarExpanded
+                HandleSideBarToogleCallback="HandleSideBarToogle" />
     </RadzenHeader>
     <RadzenSidebar @bind-Expanded="@sidebarExpanded">
         <NavMenu />
@@ -40,4 +22,9 @@
 
 @code{
     bool sidebarExpanded = true;
+
+    public void HandleSideBarToogle()
+    {
+        sidebarExpanded = !sidebarExpanded;
+    }
 }

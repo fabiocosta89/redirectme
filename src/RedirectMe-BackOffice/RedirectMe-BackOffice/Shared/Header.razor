@@ -1,0 +1,15 @@
+﻿<div class="d-flex align-items-center">
+    <RadzenSidebarToggle Click="@(() => HandleSideBarToogle())" />
+    <RadzenLink Text="RedirectMe BackOffice" Target="/" class="header-logo"/>
+</div>
+
+@code {
+    [Parameter] public bool SidebarExpanded { get; set; }
+
+    [Parameter] public EventCallback HandleSideBarToogleCallback { get; set; }
+
+    private async Task HandleSideBarToogle()
+    {
+        await HandleSideBarToogleCallback.InvokeAsync();
+    }
+}

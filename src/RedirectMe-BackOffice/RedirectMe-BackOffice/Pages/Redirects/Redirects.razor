@@ -1,9 +1,40 @@
 ﻿@page "/redirects"
 
+@using RedirectMe_BackOffice.Domain;
+@using RedirectMe_BackOffice.Features.Redirects;
+
+@inject IMediator Mediator;
+
 <PageTitle>Redirects</PageTitle>
 
 <h1>Redirects</h1>
 
-@code {
+<RadzenDataGrid Data="@redirects" 
+    TItem="Redirect" 
+    AllowFiltering="true" 
+    AllowColumnResize="true"
+    AllowSorting="true" 
+    AllowPaging="true" 
+    PageSize="20" 
+    ShowPagingSummary="true"
+    ColumnWidth="300px">
+    <Columns>
+        <RadzenDataGridColumn TItem="Redirect" Property="Id" Title="Id" Width="200px" />
+        <RadzenDataGridColumn TItem="Redirect" Property="Url" Title="Url" />
+        <RadzenDataGridColumn TItem="Redirect" Property="NumberOfTimesUsed" Title="Times Used" Width="200px" />
+        <RadzenDataGridColumn TItem="Redirect" Property="CreationDate" Title="Creation Date" FormatString="{0:dd/MM/yyyy HH:mm:ss}" />
+        <RadzenDataGridColumn TItem="Redirect" Property="LastUsedDate" Title="Last Used" />
+    </Columns>
+</RadzenDataGrid>
 
+@code {
+    IEnumerable<Redirect> redirects = new List<Redirect>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        RedirectsEnvelope redirectsEnvelope = await Mediator.Send(new List.Query());
+        redirects = redirectsEnvelope.Redirects;
+    }
 }
